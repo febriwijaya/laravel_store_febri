@@ -105,8 +105,15 @@ class ProductGalleryController extends Controller
      */
     public function edit($id)
     {
-        
+        $productgallery = ProductGallery::findOrFail($id);  
+        $products = Product::all();
+        return view('pages.admin.product-gallery.edit', [
+          'item' => $productgallery,
+          'products' => $products
+        ]);
     }
+
+    
 
     /**
      * Update the specified resource in storage.
@@ -117,7 +124,18 @@ class ProductGalleryController extends Controller
      */
     public function update(ProductGalleryRequest $request, $id)
     {
-     
+      $productgallery = ProductGallery::findOrFail($id);      
+      $data = $request->all();
+      $data['foto'] = $request->file('foto')->store('public/gallery');
+
+      if($request->hasFile('foto'))
+      {
+        Storage::delete($productgallery->foto);
+        $data['foto'] = $request->file('foto')->store('public/gallery');
+      }
+      
+      $productgallery->update($data);
+      return redirect()->route('product-gallery.index');
     }
 
     /**

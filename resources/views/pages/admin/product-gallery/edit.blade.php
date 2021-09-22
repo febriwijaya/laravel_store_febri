@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-Product
+Product Gallery Edit
 @endsection
 
 @section('content')
@@ -9,9 +9,9 @@ Product
 <div class="section-content section-dashboard-home" data-aos="fade-up">
     <div class="container-fluid">
         <div class="dashboard-heading">
-            <h2 class="dashboard-title">Product</h2>
+            <h2 class="dashboard-title">Product Gallery</h2>
             <p class="dashboard-subtitle">
-                Edit Product
+                Edit Product Gallery
             </p>
         </div>
         <div class="dashboard-content">
@@ -28,24 +28,18 @@ Product
                     @endif
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('product.update', $item->id) }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('product-gallery.update', $item->id) }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Nama Product</label>
-                                            <input type="text" name="name" class="form-control" value="{{ $item->name }}" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Pemilik</label>
-                                            <select name="users_id" class="form-control" required>
-                                                <option value="{{ $item->users_id }}">{{ $item->user->name }}</option>
-                                                @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            <label>Product</label>
+                                            <select name="products_id" class="form-control" required>
+                                                <option value="{{ $item->product->id }}">{{ $item->product->name }}</option>
+                                                <option value="">--silahkan pilih--</option>
+                                                @foreach ($products as $product)
+                                                <option value="{{ $product->id }}">{{ $product->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -53,30 +47,10 @@ Product
 
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Kategori</label>
-                                            <select name="categories_id" class="form-control" required>
-                                              <option value="{{ $item->categories_id }}">{{ $item->category->name }}</option>
-                                                @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endforeach
-                                            </select>
+                                            <label>Foto</label>
+                                            <input type="file" name="foto" id="" class="form-control">
                                         </div>
                                     </div>
-
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Harga</label>
-                                            <input type="text" name="price" id="" value="{{ $item->price }}" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Dekskripsi Produk</label>
-                                            <textarea name="description" id="editor" class="form-control">{!! $item->description !!}</textarea>
-                                        </div>
-                                    </div>
-
                                 </div>
                                 <div class="row">
                                     <div class="col text-right">

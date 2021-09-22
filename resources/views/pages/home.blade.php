@@ -92,7 +92,7 @@ Home
                             {{ $product->name }}
                         </div>
                         <div class="products-price">
-                            {{ $product->price }}
+                           IDR {{ number_format($product->price) }}
                         </div>
                     </a>
                 </div>
